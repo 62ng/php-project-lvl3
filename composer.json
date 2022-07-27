@@ -1,0 +1,17 @@
+{
+    "name": "hexlet/code",
+    "description": "3rd project",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Code\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Andrey Frolov",
+            "email": "internet.buro@gmail.com"
+        }
+    ],
+    "require": {}
+}
