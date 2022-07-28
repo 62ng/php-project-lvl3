@@ -1,6 +1,9 @@
 start:
 	php artisan serve
 
+setup:
+	composer install
+
 migrate:
 	php artisan migrate
 
@@ -8,4 +11,4 @@ deploy:
 	git push heroku
 
 lint:
-	composer phpcs
+	composer exec --verbose phpcs -- --standard=PSR12 app
