@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\formController;
+use http\Client\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('form');
-});
+})->name('index');
+
+Route::post('/', [formController::class, 'getForm'])->name('form_post');
