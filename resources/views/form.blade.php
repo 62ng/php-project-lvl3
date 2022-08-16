@@ -43,7 +43,7 @@
                     <p class="lead">Бесплатно проверяйте сайты на SEO пригодность</p>
                     <form action="/" method="post" class="d-flex justify-content-center">
                         @csrf
-                        <input type="text" name="url[name]" value="" class="form-control form-control-lg" placeholder="https://www.example.com">
+                        <input type="text" name="url[name]" value="{{ old('url.name') }}" class="form-control form-control-lg" placeholder="https://www.example.com">
                         <input type="submit" class="btn btn-primary btn-lg ms-3 px-5 text-uppercase mx-3" value="Проверить">
                     </form>
                 </div>
