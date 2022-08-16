@@ -19,4 +19,4 @@ Route::get('/', function () {
     return view('form');
 })->name('index');
 
-Route::post('/', [formController::class, 'getFormData'])->name('form_post');
+Route::post('/', [FormController::class, 'getFormData'])->name('form_post');
