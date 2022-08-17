@@ -8,9 +8,16 @@ use Tests\TestCase;
 
 class FormTest extends TestCase
 {
+    public function testUrlsPage(): void
+    {
+        $response = $this->get(route('urls'));
+
+        $response->assertStatus(200);
+    }
+
     public function testFormPage(): void
     {
-        $response = $this->get('/');
+        $response = $this->get(route('form'));
 
         $response->assertStatus(200);
     }
@@ -23,7 +30,7 @@ class FormTest extends TestCase
             ]
         ];
 
-        $response = $this->post('/', $body);
+        $response = $this->post(route('form_post'), $body);
 
         $response->assertRedirect();
     }
