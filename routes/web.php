@@ -17,6 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FormController::class, 'form'])->name('form');
 
-Route::post('/', [FormController::class, 'getFormData'])->name('form_post');
+Route::post('/', [FormController::class, 'store'])->name('form_post');
 
 Route::get('/urls', [FormController::class, 'urls'])->name('urls');
