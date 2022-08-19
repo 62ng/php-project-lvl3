@@ -19,4 +19,6 @@ Route::get('/', [FormController::class, 'form'])->name('form');
 
 Route::post('/', [FormController::class, 'store'])->name('form_post');
 
-Route::get('/urls', [FormController::class, 'urls'])->name('urls');
+Route::get('/urls', [FormController::class, 'urls.index'])->name('urls');
+
+Route::get('/urls/{id}', [FormController::class, 'show'])->name('url_page');

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class FormTest extends TestCase
+class UrlTest extends TestCase
 {
     public function testUrlsPage(): void
     {

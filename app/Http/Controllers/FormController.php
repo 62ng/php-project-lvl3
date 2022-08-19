@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use JetBrains\PhpStorm\NoReturn;
 
 class FormController extends Controller
 {
@@ -28,11 +30,22 @@ class FormController extends Controller
                 ->withInput();
         }
 
-        return redirect()->route('form');
+        $id = DB::table('urls')->insertGetId([
+            'name' => $request->input('url.name')
+        ]);
+
+        return redirect()->route('url_page', $id);
     }
 
     public function urls(): View
     {
         return view('urls');
+    }
+
+    public function show($id): View
+    {
+        $url = DB::table('urls')->find($id);
+
+        return view('urls.show', compact('url'));
     }
 }
