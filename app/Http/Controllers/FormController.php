@@ -34,18 +34,6 @@ class FormController extends Controller
             'name' => $request->input('url.name')
         ]);
 
-        return redirect()->route('url_page', $id);
-    }
-
-    public function urls(): View
-    {
-        return view('urls');
-    }
-
-    public function show($id): View
-    {
-        $url = DB::table('urls')->find($id);
-
-        return view('urls.show', compact('url'));
+        return redirect()->route('urls.show', $id);
     }
 }
