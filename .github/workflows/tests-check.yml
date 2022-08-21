@@ -20,5 +20,7 @@ jobs:
       - name: Install
         # Install project (Composer)
         run: make setup
+      - name: Generate key
+        run: php artisan key:generate
       - name: PHPUnit tests check
         run: make test
