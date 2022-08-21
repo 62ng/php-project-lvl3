@@ -12,3 +12,6 @@ deploy:
 
 lint:
 	composer exec --verbose phpcs -- --standard=PSR12 app
+
+test:
+	composer exec --verbose phpunit tests
