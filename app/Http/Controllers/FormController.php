@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
@@ -30,8 +31,12 @@ class FormController extends Controller
                 ->withInput();
         }
 
+        $urlData = parse_url($request->input('url.name'));
+        $urlNormalized = implode('', [$urlData['scheme'], '://', $urlData['host']]);
+
         $id = DB::table('urls')->insertGetId([
-            'name' => $request->input('url.name')
+            'name' => $urlNormalized,
+            'created_at' => now()
         ]);
 
         return redirect()->route('urls.show', $id);
