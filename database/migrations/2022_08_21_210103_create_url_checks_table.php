@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('url_checks', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('url_id');
-            $table->integer('status_code');
-            $table->string('h1');
-            $table->string('title');
-            $table->text('description');
+            $table->integer('status_code')->nullable();
+            $table->string('h1')->nullable();
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
