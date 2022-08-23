@@ -34,6 +34,16 @@
                     <th>description</th>
                     <th>Дата создания</th>
                 </tr>
+                @foreach($checks as $check)
+                    <tr>
+                        <td>{{ $check->id }}</td>
+                        <td>{{ $check->status_code }}</td>
+                        <td>{{ $check->h1 }}</td>
+                        <td>{{ $check->title }}</td>
+                        <td>{{ $check->description }}</td>
+                        <td>{{ $check->created_at }}</td>
+                    </tr>
+                @endforeach
             </table>
         </div>
 
