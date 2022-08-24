@@ -13,7 +13,7 @@ class CheckController extends Controller
         $url = DB::table('urls')->find($id);
         DB::table('url_checks')->insert([
             'url_id' => $url->id,
-            'status_code' => NULL,
+            'status_code' => null,
             'created_at' => now()
         ]);
 

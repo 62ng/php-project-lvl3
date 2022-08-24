@@ -12,12 +12,12 @@
                     <th>Последняя проверка</th>
                     <th>Код ответа</th>
                 </tr>
-                @foreach($urls as $url)
+                @foreach($groupedUrls as $url)
                 <tr>
                     <td>{{ $url->id }}</td>
                     <td><a href="/urls/{{ $url->id }}">{{ $url->name }}</a></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ $url->check_date }}</td>
+                    <td>{{ $url->status_code }}</td>
                 </tr>
                 @endforeach
             </table>

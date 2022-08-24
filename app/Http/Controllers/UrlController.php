@@ -15,7 +15,20 @@ class UrlController extends Controller
     {
         $urls = DB::table('urls')->get();
 
-        return view('urls.index', compact('urls'));
+        $lastUrlChecks = DB::table('url_checks')
+            ->select(['url_id', DB::raw('MAX(created_at) as check_date'), 'status_code'])
+            ->groupBy('url_id', 'status_code')
+            ->get();
+        $urlChecks = $lastUrlChecks->keyBy('url_id');
+
+        $groupedUrls = $urls->map(function ($item) use ($urlChecks) {
+            $item->check_date = $urlChecks[$item->id]->check_date ?? null;
+            $item->status_code = $urlChecks[$item->id]->status_code ?? null;
+
+            return $item;
+        });
+
+        return view('urls.index', compact('groupedUrls'));
     }
 
     public function create()
