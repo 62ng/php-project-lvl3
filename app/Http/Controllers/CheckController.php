@@ -10,13 +10,12 @@ class CheckController extends Controller
 {
     public function store($id): RedirectResponse
     {
-        $url = DB::table('urls')->find($id);
         DB::table('url_checks')->insert([
-            'url_id' => $url->id,
+            'url_id' => $id,
             'status_code' => null,
             'created_at' => now()
         ]);
 
-        return redirect()->route('urls.show', $url->id);
+        return redirect()->route('urls.show', $id);
     }
 }
