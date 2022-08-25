@@ -39,6 +39,9 @@ class FormController extends Controller
             'created_at' => now()
         ]);
 
+        flash('URL успешно добавлен')
+            ->success();
+
         return redirect()->route('urls.show', $id);
     }
 }

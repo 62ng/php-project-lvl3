@@ -38,23 +38,6 @@ class UrlController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-//        $validator = Validator::make($request->all(), [
-//            'url.name' => 'required|url|unique:urls,name|max:255'
-//        ]);
-//
-//        if ($validator->fails()) {
-//            flash('Некорректный URL')
-//                ->error();
-//
-//            return redirect()->route('form')
-//                ->withInput();
-//        }
-//
-//        $id = DB::table('urls')->insertGetId([
-//            'name' => $request->input('url.name')
-//        ]);
-//
-//        return redirect()->route('urls.show', $id);
     }
 
     public function show($id): View
