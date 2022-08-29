@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DiDom\Document;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,14 @@ class CheckController extends Controller
             return redirect()->route('urls.show', $id);
         }
 
+        $document = new Document($response->body());
+        $tagH1 = $document->find('h1');
+        $contentH1 = $tagH1 ? $tagH1[0]->text() : null;
+
         DB::table('url_checks')->insert([
             'url_id' => $url->id,
             'status_code' => $response->status(),
+            'h1' => $contentH1,
             'created_at' => now()
         ]);
 
