@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DiDom\Document;
+use DiDom\Exceptions\InvalidSelectorException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -24,13 +25,20 @@ class CheckController extends Controller
         }
 
         $document = new Document($response->body());
-        $tagH1 = $document->find('h1');
-        $contentH1 = $tagH1 ? $tagH1[0]->text() : null;
+
+        $h1Content = optional($document->first('h1'))->text();
+
+        $titleContent = optional($document->first('title'))->text();
+
+        $descriptions = $document->xpath('/html/head/meta[@name="description"]/@content');
+        $description = $descriptions ? $descriptions[0] : null;
 
         DB::table('url_checks')->insert([
             'url_id' => $url->id,
             'status_code' => $response->status(),
-            'h1' => $contentH1,
+            'h1' => $h1Content,
+            'title' => $titleContent,
+            'description' => $description,
             'created_at' => now()
         ]);
 
