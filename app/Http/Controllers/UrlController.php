@@ -2,33 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 class UrlController extends Controller
 {
     public function index(): View
     {
-        $urls = DB::table('urls')->get();
+        $urls = DB::table('urls')
+            ->orderBy('id')
+            ->paginate();
 
-        $lastUrlChecks = DB::table('url_checks')
+        $urlIds = $urls->pluck('id');
+
+        $lastChecks = DB::table('url_checks')
             ->select(['url_id', DB::raw('MAX(created_at) as check_date'), 'status_code'])
+            ->whereIn('url_id', $urlIds)
             ->groupBy('url_id', 'status_code')
             ->get();
-        $urlChecks = $lastUrlChecks->keyBy('url_id');
 
-        $groupedUrls = $urls->map(function ($item) use ($urlChecks) {
-            $item->check_date = $urlChecks[$item->id]->check_date ?? null;
-            $item->status_code = $urlChecks[$item->id]->status_code ?? null;
+        $checksGrouped = $lastChecks->keyBy('url_id');
 
-            return $item;
+        $checks = $urlIds->flip()->map(function ($item, $key) use ($checksGrouped) {
+            return $checksGrouped[$key] ?? null;
         });
 
-        return view('urls.index', compact('groupedUrls'));
+        return view('urls.index', compact('urls', 'checks'));
     }
 
     public function create()

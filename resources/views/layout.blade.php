@@ -31,7 +31,9 @@
 
 <main class="flex-grow-1">
     @include('flash::message')
-    @yield('content')
+    <div class="container mt-3">
+        @yield('content')
+    </div>
 </main>
 
 <!-- JavaScript Bundle with Popper -->
