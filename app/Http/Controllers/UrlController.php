@@ -36,8 +36,9 @@ class UrlController extends Controller
         //
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
+        //
     }
 
     public function show($id): View

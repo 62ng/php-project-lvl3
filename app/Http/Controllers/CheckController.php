@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use DiDom\Document;
-use DiDom\Exceptions\InvalidSelectorException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;

@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
@@ -21,7 +20,7 @@ class UrlTest extends TestCase
     public function testUrlPage(): void
     {
         $id = DB::table('urls')->insertGetId([
-            'name' => 'http://example1.com'
+            'name' => 'http://example.com'
         ]);
 
         $response = $this->get(route('urls.show', $id));

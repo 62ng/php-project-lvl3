@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -14,7 +13,7 @@ class CheckTest extends TestCase
 
     public function testCreateCheck()
     {
-        $urlName = 'http://test.ru';
+        $urlName = 'http://example.com';
 
         $id = DB::table('urls')->insertGetId([
             'name' => $urlName,
