@@ -21,7 +21,12 @@ class CheckTest extends TestCase
         ]);
 
         Http::fake([
-            $urlName => Http::response('ok', 200, [])
+//            $urlName => Http::response('ok', 200, []),
+            $urlName => Http::response('
+                <html><head>
+                <meta name="description" content="Description"></head>
+                <title>Title</title>
+                <h1>H1</h1></html>', 200, [])
         ]);
 
         $response = $this->post(route('check_post', $id));
@@ -30,7 +35,10 @@ class CheckTest extends TestCase
 
         $this->assertDatabaseHas('url_checks', [
             'url_id' => $id,
-            'status_code' => 200
+            'status_code' => 200,
+            'h1' => 'H1',
+            'title' => 'Title',
+            'description' => 'Description',
         ]);
     }
 }
