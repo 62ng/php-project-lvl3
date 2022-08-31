@@ -55,6 +55,8 @@ class CheckTest extends TestCase
 
         $this->expectException(RequestException::class);
 
-        $this->withoutExceptionHandling()->post(route('check_post', $id));
+        $response = $this->withoutExceptionHandling()->post(route('check_post', $id));
+
+        $response->assertRedirect();
     }
 }
