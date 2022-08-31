@@ -28,6 +28,15 @@ class UrlTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function testUrlPage404(): void
+    {
+        $id = 'blabla';
+
+        $response = $this->get(route('urls.show', $id));
+
+        $response->assertStatus(404);
+    }
+
     public function testCreateUrlPage(): void
     {
         $response = $this->get(route('form'));

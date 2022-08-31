@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -42,21 +44,21 @@ class CheckTest extends TestCase
         ]);
     }
 
-    public function testCreateCheckWithError()
-    {
-        $urlName = 'http://example.com';
-
-        $id = DB::table('urls')->insertGetId([
-            'name' => $urlName,
-            'created_at' => now()
-        ]);
-
-        Http::fake([
-            $urlName => Http::response('error', 500, []),
-        ]);
-
-        $response = $this->post(route('check_post', $id));
-
-        $response->assertRedirect();
-    }
+//    public function testCreateCheckException()
+//    {
+//        $urlName = 'http://qqqqq235qqqqqe547eqq.com';
+//
+//        $id = DB::table('urls')->insertGetId([
+//            'name' => $urlName,
+//            'created_at' => now()
+//        ]);
+//
+////        Http::fake([
+////            $urlName => Http::response('error', 500, []),
+////        ]);
+//
+//        $this->expectException(RequestException::class);
+//
+//        $this->post(route('check_post', $id));
+//    }
 }
