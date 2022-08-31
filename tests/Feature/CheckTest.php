@@ -44,21 +44,17 @@ class CheckTest extends TestCase
         ]);
     }
 
-//    public function testCreateCheckException()
-//    {
-//        $urlName = 'http://qqqqq235qqqqqe547eqq.com';
-//
-//        $id = DB::table('urls')->insertGetId([
-//            'name' => $urlName,
-//            'created_at' => now()
-//        ]);
-//
-////        Http::fake([
-////            $urlName => Http::response('error', 500, []),
-////        ]);
-//
-//        $this->expectException(RequestException::class);
-//
-//        $this->post(route('check_post', $id));
-//    }
+    public function testCreateCheckException()
+    {
+        $urlName = '';
+
+        $id = DB::table('urls')->insertGetId([
+            'name' => $urlName,
+            'created_at' => now()
+        ]);
+
+        $this->expectException(RequestException::class);
+
+        $this->withoutExceptionHandling()->post(route('check_post', $id));
+    }
 }
