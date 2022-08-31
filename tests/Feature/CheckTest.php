@@ -41,4 +41,22 @@ class CheckTest extends TestCase
             'description' => 'Description',
         ]);
     }
+
+    public function testCreateCheckWithError()
+    {
+        $urlName = 'http://example.com';
+
+        $id = DB::table('urls')->insertGetId([
+            'name' => $urlName,
+            'created_at' => now()
+        ]);
+
+        Http::fake([
+            $urlName => Http::response('error', 500, []),
+        ]);
+
+        $response = $this->post(route('check_post', $id));
+
+        $response->assertRedirect();
+    }
 }
