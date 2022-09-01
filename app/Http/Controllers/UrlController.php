@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class UrlController extends Controller
@@ -31,6 +32,16 @@ class UrlController extends Controller
         return view('urls.index', compact('urls', 'checks'));
     }
 
+    public function create(): Response
+    {
+        //
+    }
+
+    public function store(Request $request): Response
+    {
+        //
+    }
+
     public function show($id): View
     {
         $url = DB::table('urls')->find($id);
@@ -45,5 +56,20 @@ class UrlController extends Controller
             ->get();
 
         return view('urls.show', compact('url', 'checks'));
+    }
+
+    public function edit($id): Response
+    {
+        //
+    }
+
+    public function update(Request $request, $id): Response
+    {
+        //
+    }
+
+    public function destroy($id): Response
+    {
+        //
     }
 }
