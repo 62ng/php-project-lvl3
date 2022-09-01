@@ -44,6 +44,7 @@ class UrlController extends Controller
                 ->error();
 
             return redirect()->route('form')
+                ->withErrors($validator)
                 ->withInput();
         }
 
