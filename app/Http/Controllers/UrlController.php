@@ -43,9 +43,7 @@ class UrlController extends Controller
             flash('Некорректный URL')
                 ->error();
 
-            return redirect()->route('form')
-                ->withErrors($validator)
-                ->withInput();
+            return back()->withErrors($validator);
         }
 
         $urlData = parse_url($request->input('url.name'));
