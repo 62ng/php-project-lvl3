@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Laracasts\Flash\Message;
 use Tests\TestCase;
 
 class CheckTest extends TestCase
@@ -23,7 +24,6 @@ class CheckTest extends TestCase
         ]);
 
         Http::fake([
-//            $urlName => Http::response('ok', 200, []),
             $urlName => Http::response('
                 <html><head>
                 <meta name="description" content="Description"></head>
@@ -46,16 +46,14 @@ class CheckTest extends TestCase
 
     public function testCreateCheckException()
     {
-        $urlName = '';
+        $urlName = 'example';
 
         $id = DB::table('urls')->insertGetId([
             'name' => $urlName,
             'created_at' => now()
         ]);
 
-        $this->expectException(RequestException::class);
-
-        $response = $this->withoutExceptionHandling()->post(route('check_post', $id));
+        $response = $this->post(route('check_post', $id));
 
         $response->assertRedirect();
     }
