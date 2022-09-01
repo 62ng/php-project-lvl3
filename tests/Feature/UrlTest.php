@@ -52,7 +52,7 @@ class UrlTest extends TestCase
             ]
         ];
 
-        $response = $this->post(route('form_post'), $body);
+        $response = $this->post(route('urls.store'), $body);
 
         $response->assertRedirect();
 
@@ -68,7 +68,7 @@ class UrlTest extends TestCase
             ]
         ];
 
-        $this->post(route('form_post'), $body);
+        $this->post(route('urls.store'), $body);
 
         $this->assertDatabaseMissing('urls', ['name' =>  $url]);
     }

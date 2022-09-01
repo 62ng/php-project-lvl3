@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class UrlController extends Controller
 {
@@ -32,14 +33,32 @@ class UrlController extends Controller
         return view('urls.index', compact('urls', 'checks'));
     }
 
-    public function create(): Response
+    public function store(Request $request): RedirectResponse
     {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            'url.name' => 'required|url|unique:urls,name|max:255'
+        ]);
 
-    public function store(Request $request): Response
-    {
-        //
+        if ($validator->fails()) {
+            flash('Некорректный URL')
+                ->error();
+
+            return redirect()->route('form')
+                ->withInput();
+        }
+
+        $urlData = parse_url($request->input('url.name'));
+        $urlNormalized = implode('', [$urlData['scheme'], '://', $urlData['host']]);
+
+        $id = DB::table('urls')->insertGetId([
+            'name' => $urlNormalized,
+            'created_at' => now()
+        ]);
+
+        flash('URL успешно добавлен')
+            ->success();
+
+        return redirect()->route('urls.show', $id);
     }
 
     public function show($id): View
@@ -56,20 +75,5 @@ class UrlController extends Controller
             ->get();
 
         return view('urls.show', compact('url', 'checks'));
-    }
-
-    public function edit($id): Response
-    {
-        //
-    }
-
-    public function update(Request $request, $id): Response
-    {
-        //
-    }
-
-    public function destroy($id): Response
-    {
-        //
     }
 }

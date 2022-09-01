@@ -2,12 +2,9 @@
 
 namespace Tests\Feature;
 
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Laracasts\Flash\Message;
 use Tests\TestCase;
 
 class CheckTest extends TestCase
@@ -31,7 +28,7 @@ class CheckTest extends TestCase
                 <h1>H1</h1></html>', 200, [])
         ]);
 
-        $response = $this->post(route('check_post', $id));
+        $response = $this->post(route('check_url', $id));
 
         $response->assertRedirect();
 
@@ -53,7 +50,7 @@ class CheckTest extends TestCase
             'created_at' => now()
         ]);
 
-        $response = $this->post(route('check_post', $id));
+        $response = $this->post(route('check_url', $id));
 
         $response->assertRedirect();
     }
