@@ -44,7 +44,8 @@ class UrlController extends Controller
                 ->error();
 
             return redirect()->route('form')
-                ->withErrors($validator);
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $urlData = parse_url($request->input('url.name'));
