@@ -16,7 +16,7 @@ class UrlController extends Controller
             ->orderBy('id')
             ->paginate();
 
-        $urlIds = collect($urls)->pluck('id');
+        $urlIds = collect($urls->items())->pluck('id');
 
         $lastChecks = DB::table('url_checks')
             ->select(['url_id', DB::raw('MAX(created_at) as check_date'), 'status_code'])
@@ -26,7 +26,7 @@ class UrlController extends Controller
 
         $checksGrouped = $lastChecks->keyBy('url_id');
 
-        $checks = collect($urlIds)->flip()->map(function ($item, $key) use ($checksGrouped) {
+        $checks = $urlIds->flip()->map(function ($item, $key) use ($checksGrouped) {
             return $checksGrouped[$key] ?? null;
         });
 
