@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\Types\Integer;
 
 class UrlController extends Controller
 {
@@ -16,7 +18,7 @@ class UrlController extends Controller
             ->orderBy('id')
             ->paginate();
 
-        $urlIds = $urls->pluck('id');
+        $urlIds = Arr::pluck($urls, 'id');
 
         $lastChecks = DB::table('url_checks')
             ->select(['url_id', DB::raw('MAX(created_at) as check_date'), 'status_code'])
@@ -43,7 +45,7 @@ class UrlController extends Controller
             flash('Некорректный URL')
                 ->error();
 
-            return redirect(route('form'))
+            return redirect()->route('form')
                 ->withErrors($validator);
         }
 
@@ -72,7 +74,7 @@ class UrlController extends Controller
         return redirect()->route('urls.show', $id);
     }
 
-    public function show($id): View
+    public function show(Integer $id): View
     {
         $url = DB::table('urls')->find($id);
 

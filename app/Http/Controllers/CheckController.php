@@ -7,10 +7,11 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use phpDocumentor\Reflection\Types\Integer;
 
 class CheckController extends Controller
 {
-    public function store($id): RedirectResponse
+    public function store(Integer $id): RedirectResponse
     {
         $url = DB::table('urls')->find($id);
 
