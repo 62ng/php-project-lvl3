@@ -30,7 +30,7 @@ class UrlTest extends TestCase
 
     public function testUrlPage404(): void
     {
-        $id = 'blabla';
+        $id = '1000';
 
         $response = $this->get(route('urls.show', $id));
 

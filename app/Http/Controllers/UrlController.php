@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use phpDocumentor\Reflection\Types\Integer;
 
 class UrlController extends Controller
 {
@@ -28,7 +27,7 @@ class UrlController extends Controller
 
         $checksGrouped = $lastChecks->keyBy('url_id');
 
-        $checks = $urlIds->flip()->map(function ($item, $key) use ($checksGrouped) {
+        $checks = collect($urlIds)->flip()->map(function ($item, $key) use ($checksGrouped) {
             return $checksGrouped[$key] ?? null;
         });
 
@@ -74,7 +73,7 @@ class UrlController extends Controller
         return redirect()->route('urls.show', $id);
     }
 
-    public function show(Integer $id): View
+    public function show(int $id): View
     {
         $url = DB::table('urls')->find($id);
 
