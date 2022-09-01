@@ -36,7 +36,7 @@ class UrlController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
-            'url.name' => 'required|url|unique:urls,name|max:255'
+            'url.name' => 'required|url|max:255'
         ]);
 
         if ($validator->fails()) {
@@ -49,6 +49,17 @@ class UrlController extends Controller
 
         $urlData = parse_url($request->input('url.name'));
         $urlNormalized = implode('', [$urlData['scheme'], '://', $urlData['host']]);
+
+        $url = DB::table('urls')
+            ->where('name', $urlNormalized)
+            ->first();
+
+        if ($url) {
+            flash('Такой URL уже добавлен')
+                ->warning();
+
+            return redirect(route('urls.show', $url->id));
+        }
 
         $id = DB::table('urls')->insertGetId([
             'name' => $urlNormalized,
