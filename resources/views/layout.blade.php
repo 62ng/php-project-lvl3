@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,9 +30,7 @@
 
 <main class="flex-grow-1">
     @include('flash::message')
-    <div class="container mt-3">
         @yield('content')
-    </div>
 </main>
 
 <!-- JavaScript Bundle with Popper -->
