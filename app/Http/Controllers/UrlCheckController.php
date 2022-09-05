@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
-class CheckController extends Controller
+class UrlCheckController extends Controller
 {
     public function store(int $id): RedirectResponse
     {

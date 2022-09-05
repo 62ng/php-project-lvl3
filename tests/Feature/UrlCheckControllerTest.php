@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
-class CheckTest extends TestCase
+class UrlCheckControllerTest extends TestCase
 {
     use RefreshDatabase;
 
