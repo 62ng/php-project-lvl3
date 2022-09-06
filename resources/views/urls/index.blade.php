@@ -1,6 +1,8 @@
 @extends('layout')
 
 @section('content')
+
+    <div class="container-lg">
         <h1 class="mt-5 mb-3">Сайты</h1>
         <div class="table-responsive">
 
@@ -32,5 +34,6 @@
             {{ $urls->links() }}
 
         </div>
+    </div>
 
 @endsection
