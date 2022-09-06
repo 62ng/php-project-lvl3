@@ -74,13 +74,11 @@ class UrlController extends Controller
     {
         $url = DB::table('urls')->find($id);
 
-        if (!$url) {
-            abort(404);
-        }
+        abort_unless($url, 404);
 
         $checks = DB::table('url_checks')
-            ->where('url_id', '=', $url->id)
-            ->orderBy('created_at', 'desc')
+            ->where('url_id', $url->id)
+            ->latest()
             ->get();
 
         return view('urls.show', compact('url', 'checks'));
