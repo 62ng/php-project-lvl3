@@ -18,17 +18,12 @@ class UrlController extends Controller
 
         $urlIds = collect($urls->items())->pluck('id');
 
-        $lastChecks = DB::table('url_checks')
+        $checks = DB::table('url_checks')
             ->select(['url_id', DB::raw('MAX(created_at) as check_date'), 'status_code'])
             ->whereIn('url_id', $urlIds)
             ->groupBy('url_id', 'status_code')
-            ->get();
-
-        $checksGrouped = $lastChecks->keyBy('url_id');
-
-        $checks = $urlIds->flip()->map(function ($item, $key) use ($checksGrouped) {
-            return $checksGrouped[$key] ?? null;
-        });
+            ->get()
+            ->keyBy('url_id');
 
         return view('urls.index', compact('urls', 'checks'));
     }
