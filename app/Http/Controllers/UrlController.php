@@ -43,8 +43,10 @@ class UrlController extends Controller
                 ->withInput();
         }
 
-        $urlData = parse_url($request->input('url.name'));
-        $urlNormalized = implode('', [$urlData['scheme'], '://', $urlData['host']]);
+        $validated = $validator->validated();
+
+        $urlParts = parse_url(mb_strtolower($validated['url']['name']));
+        $urlNormalized = implode('', [$urlParts['scheme'], '://', $urlParts['host']]);
 
         $url = DB::table('urls')
             ->where('name', $urlNormalized)
