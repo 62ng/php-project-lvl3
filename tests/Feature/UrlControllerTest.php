@@ -14,7 +14,7 @@ class UrlControllerTest extends TestCase
     {
         $response = $this->get(route('urls.index'));
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function testShow(): void
@@ -25,7 +25,7 @@ class UrlControllerTest extends TestCase
 
         $response = $this->get(route('urls.show', $id));
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function testShowWithNoId(): void
@@ -34,14 +34,14 @@ class UrlControllerTest extends TestCase
 
         $response = $this->get(route('urls.show', $id));
 
-        $response->assertStatus(404);
+        $response->assertNotFound();
     }
 
     public function testFormPage(): void
     {
         $response = $this->get(route('form'));
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function testStore(): void
