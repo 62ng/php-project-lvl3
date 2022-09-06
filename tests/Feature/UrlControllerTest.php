@@ -10,14 +10,14 @@ class UrlControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testUrlsPage(): void
+    public function testIndex(): void
     {
         $response = $this->get(route('urls.index'));
 
         $response->assertStatus(200);
     }
 
-    public function testUrlPage(): void
+    public function testShow(): void
     {
         $id = DB::table('urls')->insertGetId([
             'name' => 'http://example.com'
@@ -28,7 +28,7 @@ class UrlControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testUrlPage404(): void
+    public function testShowWithNoId(): void
     {
         $id = '1000';
 
@@ -37,14 +37,14 @@ class UrlControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function testCreateUrlPage(): void
+    public function testFormPage(): void
     {
         $response = $this->get(route('form'));
 
         $response->assertStatus(200);
     }
 
-    public function testCreateUrl(): void
+    public function testStore(): void
     {
         $body = [
             'url' => [
@@ -59,7 +59,7 @@ class UrlControllerTest extends TestCase
         $this->assertDatabaseHas('urls', ['name' => 'https://example.com']);
     }
 
-    public function testCreateBrakedUrl(): void
+    public function testStoreWithFailUrl(): void
     {
         $url = 'blabla';
         $body = [
