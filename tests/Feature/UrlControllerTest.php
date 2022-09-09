@@ -69,4 +69,21 @@ class UrlControllerTest extends TestCase
 
         $response->assertSessionHasErrors(['url.name']);
     }
+
+    public function testStoreWithExistingUrl(): void
+    {
+        $body = [
+            'url' => [
+                'name' => 'https://example.com'
+            ]
+        ];
+
+        $this->post(route('urls.store'), $body);
+
+        $response = $this->post(route('urls.store'), $body);
+
+        $response->assertRedirect();
+
+        $this->assertDatabaseCount('urls', 1);
+    }
 }
