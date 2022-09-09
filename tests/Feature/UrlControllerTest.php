@@ -70,8 +70,10 @@ class UrlControllerTest extends TestCase
             ]
         ];
 
-        $this->post(route('urls.store'), $body);
+        $response = $this->post(route('urls.store'), $body);
 
         $this->assertDatabaseMissing('urls', ['name' =>  $url]);
+
+        $response->assertSessionHasErrors(['url.name']);
     }
 }
