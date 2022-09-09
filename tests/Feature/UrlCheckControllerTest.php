@@ -2,16 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class UrlCheckControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
-    public function testCreateCheck()
+    public function testStore()
     {
         $urlName = 'http://example.com';
 
@@ -41,7 +38,7 @@ class UrlCheckControllerTest extends TestCase
         ]);
     }
 
-    public function testCreateCheckException()
+    public function testStoreWithException()
     {
         $urlName = 'example';
 
