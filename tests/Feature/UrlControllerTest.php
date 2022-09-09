@@ -37,13 +37,6 @@ class UrlControllerTest extends TestCase
         $response->assertNotFound();
     }
 
-    public function testFormPage(): void
-    {
-        $response = $this->get(route('form'));
-
-        $response->assertOk();
-    }
-
     public function testStore(): void
     {
         $body = [
