@@ -57,6 +57,8 @@ class UrlControllerTest extends TestCase
         $response->assertRedirect();
 
         $this->assertDatabaseHas('urls', ['name' => 'https://example.com']);
+
+        $response->assertSessionHasNoErrors();
     }
 
     public function testStoreWithFailUrl(): void
