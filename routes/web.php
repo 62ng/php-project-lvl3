@@ -8,4 +8,4 @@ Route::view('/', 'form')->name('form');
 
 Route::resource('urls', UrlController::class);
 
-Route::post('/urls/{id}/checks', [UrlCheckController::class, 'store'])->name('check_url');
+Route::resource('urls.checks', UrlCheckController::class)->shallow();

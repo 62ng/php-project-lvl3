@@ -25,7 +25,7 @@ class UrlCheckControllerTest extends TestCase
             $urlName => Http::response($fakePageHtml, 200, [])
         ]);
 
-        $response = $this->post(route('check_url', $id));
+        $response = $this->post(route('urls.checks.store', $id));
 
         $response->assertRedirect();
 
@@ -47,7 +47,7 @@ class UrlCheckControllerTest extends TestCase
             'created_at' => now()
         ]);
 
-        $response = $this->post(route('check_url', $id));
+        $response = $this->post(route('urls.checks.store', $id));
 
         $response->assertRedirect();
     }
