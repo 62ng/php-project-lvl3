@@ -18,8 +18,7 @@ class UrlCheckControllerTest extends TestCase
             'created_at' => now()
         ]);
 
-//        $fakePageHtml = Storage::get(base_path() . '/tests/fixtures/fake_page.html');
-        $fakePageHtml = file_get_contents(base_path() . '/tests/fixtures/fake_page.html');
+        $fakePageHtml = file_get_contents(__DIR__ . '/../fixtures/fake_page.html');
 
         Http::fake([
             $urlName => Http::response($fakePageHtml, 200, [])
