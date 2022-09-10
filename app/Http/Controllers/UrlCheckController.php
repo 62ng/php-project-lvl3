@@ -23,15 +23,14 @@ class UrlCheckController extends Controller
 
             $titleContent = optional($document->first('title'))->text();
 
-            $descriptions = $document->xpath('/html/head/meta[@name="description"]/@content');
-            $description = $descriptions ? $descriptions[0] : null;
+            $descriptionContent = optional($document->first('meta[name=description]'))->attr('content');
 
             DB::table('url_checks')->insert([
                 'url_id' => $url->id,
                 'status_code' => $response->status(),
                 'h1' => $h1Content,
                 'title' => $titleContent,
-                'description' => $description,
+                'description' => $descriptionContent,
                 'created_at' => now()
             ]);
         } catch (ConnectionException $e) {
