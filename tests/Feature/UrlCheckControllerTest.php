@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UrlCheckControllerTest extends TestCase
@@ -17,12 +18,11 @@ class UrlCheckControllerTest extends TestCase
             'created_at' => now()
         ]);
 
+//        $fakePageHtml = Storage::get(base_path() . '/tests/fixtures/fake_page.html');
+        $fakePageHtml = file_get_contents(base_path() . '/tests/fixtures/fake_page.html');
+
         Http::fake([
-            $urlName => Http::response('
-                <html><head>
-                <meta name="description" content="Description"></head>
-                <title>Title</title>
-                <h1>H1</h1></html>', 200, [])
+            $urlName => Http::response($fakePageHtml, 200, [])
         ]);
 
         $response = $this->post(route('check_url', $id));
