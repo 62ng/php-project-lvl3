@@ -56,7 +56,7 @@ class UrlController extends Controller
             flash('Такой URL уже добавлен')
                 ->warning();
 
-            return redirect(route('urls.show', $url->id));
+            return redirect()->route('urls.show', $url->id);
         }
 
         $id = DB::table('urls')->insertGetId([

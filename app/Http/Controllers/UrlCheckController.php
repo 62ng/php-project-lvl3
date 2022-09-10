@@ -16,31 +16,29 @@ class UrlCheckController extends Controller
 
         try {
             $response = Http::get($url->name);
+
+            $document = new Document($response->body());
+
+            $h1Content = optional($document->first('h1'))->text();
+
+            $titleContent = optional($document->first('title'))->text();
+
+            $descriptions = $document->xpath('/html/head/meta[@name="description"]/@content');
+            $description = $descriptions ? $descriptions[0] : null;
+
+            DB::table('url_checks')->insert([
+                'url_id' => $url->id,
+                'status_code' => $response->status(),
+                'h1' => $h1Content,
+                'title' => $titleContent,
+                'description' => $description,
+                'created_at' => now()
+            ]);
         } catch (ConnectionException $e) {
             flash($e->getMessage())
                 ->error();
-
+        } finally {
             return redirect()->route('urls.show', $id);
         }
-
-        $document = new Document($response->body());
-
-        $h1Content = optional($document->first('h1'))->text();
-
-        $titleContent = optional($document->first('title'))->text();
-
-        $descriptions = $document->xpath('/html/head/meta[@name="description"]/@content');
-        $description = $descriptions ? $descriptions[0] : null;
-
-        DB::table('url_checks')->insert([
-            'url_id' => $url->id,
-            'status_code' => $response->status(),
-            'h1' => $h1Content,
-            'title' => $titleContent,
-            'description' => $description,
-            'created_at' => now()
-        ]);
-
-        return redirect()->route('urls.show', $url->id);
     }
 }
