@@ -4,14 +4,13 @@ namespace Tests\Feature;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UrlCheckControllerTest extends TestCase
 {
     public function testStore()
     {
-        $urlName = 'http://example.com';
+        $urlName = 'https://example.com';
 
         $id = DB::table('urls')->insertGetId([
             'name' => $urlName,

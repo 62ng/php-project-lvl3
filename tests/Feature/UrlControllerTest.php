@@ -2,11 +2,23 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
+use Illuminate\Support\Facades\DB;
 
 class UrlControllerTest extends TestCase
 {
+    private int $existingUrlId;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->existingUrlId = DB::table('urls')->insertGetId([
+            'name' => 'https://example.com',
+            'created_at' => now()
+        ]);
+    }
+
     public function testIndex(): void
     {
         $response = $this->get(route('urls.index'));
@@ -16,29 +28,26 @@ class UrlControllerTest extends TestCase
 
     public function testShow(): void
     {
-        $id = DB::table('urls')->insertGetId([
-            'name' => 'http://example.com'
-        ]);
-
-        $response = $this->get(route('urls.show', $id));
+        $response = $this->get(route('urls.show', $this->existingUrlId));
 
         $response->assertOk();
     }
 
     public function testShowWithNoId(): void
     {
-        $id = '1000';
+        $nonexistentId = '1000';
 
-        $response = $this->get(route('urls.show', $id));
+        $response = $this->get(route('urls.show', $nonexistentId));
 
         $response->assertNotFound();
     }
 
     public function testStore(): void
     {
+        $newUrl = 'https://example2.com';
         $body = [
             'url' => [
-                'name' => 'https://example.com'
+                'name' => $newUrl
             ]
         ];
 
@@ -46,23 +55,23 @@ class UrlControllerTest extends TestCase
 
         $response->assertRedirect();
 
-        $this->assertDatabaseHas('urls', ['name' => 'https://example.com']);
+        $this->assertDatabaseHas('urls', ['name' => $newUrl]);
 
         $response->assertSessionHasNoErrors();
     }
 
     public function testStoreWithFailUrl(): void
     {
-        $url = 'blabla';
+        $failUrl = 'example';
         $body = [
             'url' => [
-                'name' =>  $url
+                'name' =>  $failUrl
             ]
         ];
 
         $response = $this->post(route('urls.store'), $body);
 
-        $this->assertDatabaseMissing('urls', ['name' =>  $url]);
+        $this->assertDatabaseMissing('urls', ['name' =>  $failUrl]);
 
         $response->assertSessionHasErrors(['url.name']);
     }
@@ -74,9 +83,6 @@ class UrlControllerTest extends TestCase
                 'name' => 'https://example.com'
             ]
         ];
-
-        $this->post(route('urls.store'), $body);
-
         $response = $this->post(route('urls.store'), $body);
 
         $response->assertRedirect();
