@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -44,7 +45,7 @@ class UrlCheckControllerTest extends TestCase
         ]);
     }
 
-    public function testStoreWithException()
+    public function testStoreWithConnectionError()
     {
         $failUrl = 'example';
 
@@ -54,6 +55,8 @@ class UrlCheckControllerTest extends TestCase
         ]);
 
         $response = $this->post(route('urls.checks.store', $id));
+
+        $response->assertSessionHas(['flash_notification']);
 
         $response->assertRedirect();
     }
