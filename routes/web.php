@@ -6,6 +6,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'form')->name('form');
 
-Route::resource('urls', UrlController::class);
+Route::resource('urls', UrlController::class)->only('index', 'store', 'show');
 
-Route::resource('urls.checks', UrlCheckController::class)->shallow();
+Route::resource('urls.checks', UrlCheckController::class)->only('store');
