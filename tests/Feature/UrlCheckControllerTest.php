@@ -8,27 +8,35 @@ use Tests\TestCase;
 
 class UrlCheckControllerTest extends TestCase
 {
-    public function testStore()
-    {
-        $urlName = 'https://example.com';
+    private int $urlId;
+    private string $urlName;
 
-        $id = DB::table('urls')->insertGetId([
-            'name' => $urlName,
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->urlName = 'https://example.com';
+
+        $this->urlId = DB::table('urls')->insertGetId([
+            'name' => $this->urlName,
             'created_at' => now()
         ]);
+    }
 
+    public function testStore()
+    {
         $fakePageHtml = file_get_contents(__DIR__ . '/../fixtures/fake_page.html');
 
         Http::fake([
-            $urlName => Http::response($fakePageHtml, 200, [])
+            $this->urlName => Http::response($fakePageHtml, 200, [])
         ]);
 
-        $response = $this->post(route('urls.checks.store', $id));
+        $response = $this->post(route('urls.checks.store', $this->urlId));
 
         $response->assertRedirect();
 
         $this->assertDatabaseHas('url_checks', [
-            'url_id' => $id,
+            'url_id' => $this->urlId,
             'status_code' => 200,
             'h1' => 'H1',
             'title' => 'Title',
@@ -38,10 +46,10 @@ class UrlCheckControllerTest extends TestCase
 
     public function testStoreWithException()
     {
-        $urlName = 'example';
+        $failUrl = 'example';
 
         $id = DB::table('urls')->insertGetId([
-            'name' => $urlName,
+            'name' => $failUrl,
             'created_at' => now()
         ]);
 

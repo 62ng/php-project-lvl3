@@ -7,14 +7,17 @@ use Illuminate\Support\Facades\DB;
 
 class UrlControllerTest extends TestCase
 {
-    private int $existingUrlId;
+    private int $urlId;
+    private string $urlName;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->existingUrlId = DB::table('urls')->insertGetId([
-            'name' => 'https://example.com',
+        $this->urlName = 'https://example.com';
+
+        $this->urlId = DB::table('urls')->insertGetId([
+            'name' => $this->urlName,
             'created_at' => now()
         ]);
     }
@@ -28,7 +31,7 @@ class UrlControllerTest extends TestCase
 
     public function testShow(): void
     {
-        $response = $this->get(route('urls.show', $this->existingUrlId));
+        $response = $this->get(route('urls.show', $this->urlId));
 
         $response->assertOk();
     }
@@ -80,7 +83,7 @@ class UrlControllerTest extends TestCase
     {
         $body = [
             'url' => [
-                'name' => 'https://example.com'
+                'name' => $this->urlName
             ]
         ];
         $response = $this->post(route('urls.store'), $body);
