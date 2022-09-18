@@ -13,24 +13,25 @@ class UrlCheckController extends Controller
     public function store(int $id): RedirectResponse
     {
         $url = DB::table('urls')->find($id);
+        abort_unless($url, 404);
 
         try {
             $response = Http::get($url->name);
 
             $document = new Document($response->body());
 
-            $h1Content = optional($document->first('h1'))->text();
+            $h1 = optional($document->first('h1'))->text();
 
-            $titleContent = optional($document->first('title'))->text();
+            $title = optional($document->first('title'))->text();
 
-            $descriptionContent = optional($document->first('meta[name=description]'))->attr('content');
+            $description = optional($document->first('meta[name=description]'))->attr('content');
 
             DB::table('url_checks')->insert([
                 'url_id' => $url->id,
                 'status_code' => $response->status(),
-                'h1' => $h1Content,
-                'title' => $titleContent,
-                'description' => $descriptionContent,
+                'h1' => $h1,
+                'title' => $title,
+                'description' => $description,
                 'created_at' => now()
             ]);
         } catch (ConnectionException $e) {
