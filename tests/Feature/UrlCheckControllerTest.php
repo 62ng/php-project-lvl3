@@ -44,20 +44,4 @@ class UrlCheckControllerTest extends TestCase
             'description' => 'Description',
         ]);
     }
-
-    public function testStoreWithConnectionError()
-    {
-        $failUrl = 'example';
-
-        $id = DB::table('urls')->insertGetId([
-            'name' => $failUrl,
-            'created_at' => now()
-        ]);
-
-        $response = $this->post(route('urls.checks.store', $id));
-
-        $response->assertSessionHas(['flash_notification']);
-
-        $response->assertRedirect();
-    }
 }
