@@ -21,7 +21,7 @@
                 </table>
             </div>
             <h2 class="mt-5 mb-3">Проверки</h2>
-            <form method="post" action="/urls/{{ $url->id }}/checks">
+            <form method="post" action="{{ route('urls.checks.store', [$url->id]) }}">
                 @csrf
                 <input type="submit" class="btn btn-primary" value="Запустить проверку">
             </form>
@@ -38,9 +38,9 @@
                     <tr>
                         <td>{{ $check->id }}</td>
                         <td>{{ $check->status_code }}</td>
-                        <td>{{ Str::limit($check->h1, 30, ' ...') }}</td>
-                        <td>{{ Str::limit($check->title, 30, ' ...') }}</td>
-                        <td>{{ Str::limit($check->description, 30, ' ...') }}</td>
+                        <td>{{ Str::limit($check->h1, 30) }}</td>
+                        <td>{{ Str::limit($check->title, 30) }}</td>
+                        <td>{{ Str::limit($check->description, 30) }}</td>
                         <td>{{ $check->created_at }}</td>
                     </tr>
                 @endforeach
