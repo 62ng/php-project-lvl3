@@ -53,19 +53,19 @@ class UrlController extends Controller
             ->first();
 
         if ($url) {
+            $id = $url->id;
+
             flash('Такой URL уже добавлен')
                 ->warning();
+        } else {
+            $id = DB::table('urls')->insertGetId([
+                'name' => $urlNormalized,
+                'created_at' => now()
+            ]);
 
-            return redirect()->route('urls.show', $url->id);
+            flash('URL успешно добавлен')
+                ->success();
         }
-
-        $id = DB::table('urls')->insertGetId([
-            'name' => $urlNormalized,
-            'created_at' => now()
-        ]);
-
-        flash('URL успешно добавлен')
-            ->success();
 
         return redirect()->route('urls.show', $id);
     }
