@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use DiDom\Document;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\HttpClientException;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class UrlCheckController extends Controller
 {
@@ -20,21 +23,21 @@ class UrlCheckController extends Controller
 
             $document = new Document($response->body());
 
-            $h1 = optional($document->first('h1'))->text();
-
             $title = optional($document->first('title'))->text();
+
+            $h1 = optional($document->first('h1'))->text();
 
             $description = optional($document->first('meta[name=description]'))->attr('content');
 
             DB::table('url_checks')->insert([
                 'url_id' => $url->id,
                 'status_code' => $response->status(),
-                'h1' => $h1,
-                'title' => $title,
+                'h1' => Str::of($h1)->limit(255),
+                'title' => Str::of($title)->limit(255),
                 'description' => $description,
                 'created_at' => now()
             ]);
-        } catch (ConnectionException $e) {
+        } catch (ConnectionException | RequestException | HttpClientException $e) {
             flash($e->getMessage())
                 ->error();
         } finally {
