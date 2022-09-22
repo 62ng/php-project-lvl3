@@ -25,7 +25,12 @@ class UrlCheckControllerTest extends TestCase
 
     public function testStore()
     {
-        $fakePageHtml = file_get_contents(__DIR__ . '/../fixtures/fake_page.html');
+        $fakeHtmlFilePath = __DIR__ . '/../fixtures/fake_page.html';
+        $fakePageHtml = file_get_contents($fakeHtmlFilePath);
+
+        if (!$fakePageHtml) {
+            throw new \Exception("Non-existing  {$fakeHtmlFilePath}");
+        }
 
         Http::fake([
             $this->urlName => Http::response($fakePageHtml, 200, [])
