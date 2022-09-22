@@ -56,11 +56,10 @@ class UrlControllerTest extends TestCase
 
         $response = $this->post(route('urls.store'), $body);
 
+        $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
         $this->assertDatabaseHas('urls', ['name' => $newUrl]);
-
-        $response->assertSessionHasNoErrors();
     }
 
     public function testStoreWithFailUrl(): void
@@ -74,10 +73,10 @@ class UrlControllerTest extends TestCase
 
         $response = $this->post(route('urls.store'), $body);
 
-        $this->assertDatabaseMissing('urls', ['name' =>  $failUrl]);
-
         $response->assertSessionHasErrors(['url.name']);
-    }
+
+        $this->assertDatabaseMissing('urls', ['name' =>  $failUrl]);
+}
 
     public function testStoreWithExistingUrl(): void
     {
