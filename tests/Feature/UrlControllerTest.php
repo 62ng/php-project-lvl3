@@ -76,7 +76,7 @@ class UrlControllerTest extends TestCase
         $response->assertSessionHasErrors(['url.name']);
 
         $this->assertDatabaseMissing('urls', ['name' =>  $failUrl]);
-}
+    }
 
     public function testStoreWithExistingUrl(): void
     {
