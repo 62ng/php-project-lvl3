@@ -14,8 +14,7 @@ class UrlController extends Controller
     {
         $urls = DB::table('urls')
             ->orderBy('id')
-            ->paginate()
-            ->withPath('');
+            ->paginate();
 
         $urlIds = collect($urls->items())->pluck('id');
 
