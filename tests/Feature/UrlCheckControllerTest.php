@@ -23,7 +23,7 @@ class UrlCheckControllerTest extends TestCase
         ]);
     }
 
-    public function testStore()
+    public function testStore(): void
     {
         $fakeHtmlFilePath = __DIR__ . '/../fixtures/fake_page.html';
         $fakePageHtml = file_get_contents($fakeHtmlFilePath);

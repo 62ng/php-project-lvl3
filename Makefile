@@ -16,5 +16,8 @@ lint:
 test:
 	composer exec --verbose phpunit tests
 
+stan:
+	vendor/bin/phpstan analyse -c phpstan.neon
+
 test-coverage:
 	composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml
