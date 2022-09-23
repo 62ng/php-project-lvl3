@@ -27,9 +27,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
 
-        if (app()->environment('production')) {
+        if (app()->environment('local')) {
             URL::forceScheme('https');
-            $this->app['request']->server->set('HTTPS', true);
+            if (isset($this->app['request'])) {
+                $this->app['request']->server->set('HTTPS', true);
+            }
         }
     }
 }
