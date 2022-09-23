@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use http\Url;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
 
         if (app()->environment('production')) {
-            URL::forceScheme('https');
+            \URL::forceScheme('https');
         }
     }
 }
