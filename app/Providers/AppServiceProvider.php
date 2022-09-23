@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
+use http\Url;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,8 +29,6 @@ class AppServiceProvider extends ServiceProvider
 
         if (app()->environment('production')) {
             URL::forceScheme('https');
-
-            $this->app['request']->server->set('HTTPS', 'on');
         }
     }
 }
