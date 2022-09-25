@@ -6,7 +6,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class UrlController extends Controller
 {
@@ -14,7 +14,7 @@ class UrlController extends Controller
     {
         $urls = DB::table('urls')
             ->orderBy('id')
-            ->paginate();
+            ->paginate(15);
         $urls->setPath('');
 
         $urlIds = collect($urls->items())->pluck('id');
