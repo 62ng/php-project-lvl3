@@ -37,7 +37,7 @@ class UrlCheckController extends Controller
                 'description' => $description,
                 'created_at' => now()
             ]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             flash($e->getMessage())
                 ->error();
         } finally {
