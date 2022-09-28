@@ -16,18 +16,10 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           # Specify the PHP version
-          php-version: '8.1.5'
+          php-version: '8.1.*'
       - name: Install
         # Install project (Composer)
         run: make setup
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      - name: Generate key
-        run: php artisan key:generate
-      - name: npm install
-        run: npm install
-      - name: build css/js
-        run: npm run build
       - name: Run test & publish code coverage
         uses: paambaati/codeclimate-action@v2.6.0
         # Add Code Climate secret key

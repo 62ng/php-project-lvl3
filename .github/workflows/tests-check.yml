@@ -20,13 +20,5 @@ jobs:
       - name: Install
         # Install project (Composer)
         run: make setup
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      - name: Generate key
-        run: php artisan key:generate
-      - name: npm install
-        run: npm install
-      - name: build css/js
-        run: npm run build
       - name: PHPUnit tests check
         run: make test

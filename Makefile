@@ -3,12 +3,18 @@ start:
 
 setup:
 	composer install
+	cp -n .env.example .env
+	php artisan key:gen --ansi
+	touch database/database.sqlite
+	php artisan migrate
+	npm ci
+	npm run build
 
 migrate:
 	php artisan migrate
 
 deploy:
-	git push heroku
+	git push heroku main
 
 lint:
 	composer exec --verbose phpcs -- --standard=PSR12 app
