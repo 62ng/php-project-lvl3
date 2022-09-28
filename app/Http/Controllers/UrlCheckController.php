@@ -40,8 +40,8 @@ class UrlCheckController extends Controller
         } catch (\Exception $e) {
             flash($e->getMessage())
                 ->error();
-        } finally {
-            return redirect()->route('urls.show', $id);
         }
+
+        return redirect()->route('urls.show', $id);
     }
 }
