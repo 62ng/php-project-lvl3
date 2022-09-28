@@ -32,8 +32,8 @@ class UrlCheckController extends Controller
             DB::table('url_checks')->insert([
                 'url_id' => $url->id,
                 'status_code' => $response->status(),
-                'h1' => Str::of($h1)->limit(255),
-                'title' => Str::of($title)->limit(255),
+                'h1' => $h1 ? Str::of($h1)->limit(255) : null,
+                'title' => $title ? Str::of($title)->limit(255) : null,
                 'description' => $description,
                 'created_at' => now()
             ]);
